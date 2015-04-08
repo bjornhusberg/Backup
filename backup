@@ -1,0 +1,34 @@
+#!/bin/bash
+
+if [ "$#" -lt 2 ]; then
+  echo "Usage: $0 <destination> <source dir 1> <source dir 2> ... <source dir N>"
+  exit 1
+fi
+
+# configuration
+if [ ! -d "$1" ]; then
+    echo "No backup media found ($1)"
+    exit 1
+fi
+dest=$(abspath "$1")
+current="$dest/$(date "+%Y-%m-%d_%H.%M.%S")"
+latest="$dest/LATEST"
+
+# rsync each of the source directories and create hard links for untouched files
+shift
+for src in "$@"
+do
+    src=$(abspath "$src")
+    if [ ! -d "$src" ]; then
+        echo "WARNING: $source does not exist!"
+    else
+        mkdir -p "$current$src"
+        rsync -vaL --link-dest="$latest$src" "$src" "$current$src"
+    fi
+done
+
+# Replace the LATEST link
+if [ -d "$current" ]; then
+    rm -f "$latest"
+    ln -s "$current" "$latest"
+fi
