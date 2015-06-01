@@ -23,7 +23,7 @@ do
         echo "WARNING: $source does not exist!"
     else
         mkdir -p "$current$src"
-        rsync -vaL --link-dest="$latest$src" "$src" "$current$src"
+        rsync -vaL --link-dest="$latest$src" "$src/" "$current$src"
     fi
 done
 
