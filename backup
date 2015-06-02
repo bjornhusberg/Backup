@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 if [ "$#" -lt 2 ]; then
   echo "Usage: $0 <destination> <source dir 1> <source dir 2> ... <source dir N>"
   exit 1
