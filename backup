@@ -21,7 +21,7 @@ for src in "$@"
 do
     src=$(abspath "$src")
     if [ ! -d "$src" ]; then
-        echo "WARNING: $source does not exist!"
+        echo "WARNING: $src does not exist"
     else
         mkdir -p "$current$src"
         rsync -vaL --link-dest="$latest$src" "$src/" "$current$src"
